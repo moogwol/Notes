@@ -16,8 +16,8 @@ public class Note {
      * Constructor for objects of class note
      * @param  noteText A string containing the note text
      */
-    public Note(String noteText) {
-        this.text = noteText;
+    public Note() {
+        String text;
         this.dateCreated = LocalDateTime.now().toString();
     }
 
@@ -33,5 +33,9 @@ public class Note {
      */
     public String getDateCreated() {
         return dateCreated;
+    }
+
+    public void setText(String aNote) {
+        this.text = aNote;
     }
 }
