@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import notes.Note;
 
-public class Tests {
+public class NoteTest {
     private Note note = new Note();
     String message = "This is a test note";
 
