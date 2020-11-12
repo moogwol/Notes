@@ -6,5 +6,8 @@ public class Main {
         String noteText = manager.getUserNote();
         Note newNote = manager.createNote(noteText);
         manager.storeNote(newNote);
+
+        TextFileWriter writer = new TextFileWriter();
+        writer.writeToFile(manager.getUserNote() + "\n");
     }
 }
