@@ -16,18 +16,18 @@ public class DatabaseTools {
      * Makes a connection to SQLite database
      * @return Connection
      */
-    private Connection getNewConnection()  {
+    private Connection getNewConnection(String filename)  {
         Connection conn = null;
         try {
-        conn  = DriverManager.getConnection("jdbc:sqlite:test.db");
+        conn  = DriverManager.getConnection("jdbc:sqlite:" + filename);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return conn;
     }
 
-    public void setDatabase() {
-        this.database = getNewConnection();
+    public void setDatabase(String filename) {
+        this.database = getNewConnection(filename);
     }
 
     /**
