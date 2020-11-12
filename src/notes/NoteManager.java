@@ -8,9 +8,9 @@ public class NoteManager {
      * Creates a new note
      * @return Note
      */
-    public Note createNote() {
+    public Note createNote(String noteText) {
         Note note = new Note(); // create a new Note
-        note.setText(getUserNote()); // set the note's text to the user input
+        note.setText(noteText); // set the note's text to the user input
         return note;
     }
 
