@@ -1,54 +1,38 @@
 package notes;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DatabaseTools {
 
-    Connection database;
+    String databaseName;
 
     public DatabaseTools () {
-        database = null;
+        databaseName = "notes.db";
     }
 
     /**
      * Makes a connection to SQLite database
      * @return Connection
      */
-    private Connection getNewConnection(String filename)  {
+    private Connection getNewConnection()  {
         Connection conn = null;
         try {
-        conn  = DriverManager.getConnection("jdbc:sqlite:" + filename);
+        conn  = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return conn;
     }
 
-    public void setDatabase(String filename) {
-        this.database = getNewConnection(filename);
-    }
-
-    /**
-     *
-     * @return Connection
-     */
-    public Connection getDatabase() {
-        return this.database;
-    }
-
     public void createNotesTable() {
 
         // Connect to the database then get the database object
-        this.setDatabase("test.db");
-        Connection db = this.getDatabase();
+        Connection db = this.getNewConnection();
         try {
             Statement stmt = db.createStatement();
             String sql = """
                            CREATE TABLE IF NOT EXISTS notes (
-                           id INT PRIMARY KEY,
+                           id INTEGER PRIMARY KEY,
                            note_text TEXT NOT NULL,
                            date_created TEXT NOT NULL
                            );
@@ -62,21 +46,32 @@ public class DatabaseTools {
         }
     }
 
-    public void insertNoteData() {
+    /**
+     * Takes a note object and inserts its text and date into the notes database table
+     * @param aNote a Note object
+     */
+    public void insertNoteData(Note aNote) {
         // Connect to the database then get the database object
-        this.setDatabase("test.db");
-        Connection db = this.getDatabase();
+//        this.setDatabase();
+        Connection db = this.getNewConnection();
         try {
-            Statement stmt = db.createStatement();
+            /*
+            Create an SQLite insert query with with the ability to set the note_text
+            and date_created values to arbitrary strings
+             */
             String sql = """
                     INSERT INTO notes (note_text, date_created)
-                    VALUES (
-                    "I've come to play with you again",
-                    "2020-12-14")
+                    VALUES (?,?) 
                     ;                                        
                     """;
 
-            stmt.execute(sql);
+            PreparedStatement stmt = db.prepareStatement(sql);
+
+            stmt.setString(1, aNote.getText()); // set the note_text string
+            stmt.setString(2, aNote.getDateCreated()); //set the date_created string
+
+            stmt.execute(); // execute the prepared statement
+
             db.close();
 
         } catch (SQLException e) {
