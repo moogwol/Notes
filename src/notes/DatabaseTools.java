@@ -61,4 +61,26 @@ public class DatabaseTools {
             System.out.println(e.getMessage());
         }
     }
+
+    public void insertNoteData() {
+        // Connect to the database then get the database object
+        this.setDatabase("test.db");
+        Connection db = this.getDatabase();
+        try {
+            Statement stmt = db.createStatement();
+            String sql = """
+                    INSERT INTO notes (note_text, date_created)
+                    VALUES (
+                    "I've come to play with you again",
+                    "2020-12-14")
+                    ;                                        
+                    """;
+
+            stmt.execute(sql);
+            db.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

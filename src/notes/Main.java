@@ -14,6 +14,7 @@ public class Main {
 //        db.setDatabase("test3.db");
 //        System.out.println(db.getDatabase());
         db.createNotesTable();
+        db.insertNoteData();
 
     }
 }
