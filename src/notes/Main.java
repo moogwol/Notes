@@ -11,7 +11,9 @@ public class Main {
 //        writer.writeToFile(manager.getUserNote() + "\n");
 
         DatabaseTools db = new DatabaseTools();
-        db.setDatabase("test2.db");
-        System.out.println(db.getDatabase());
+//        db.setDatabase("test3.db");
+//        System.out.println(db.getDatabase());
+        db.createNotesTable();
+
     }
 }
